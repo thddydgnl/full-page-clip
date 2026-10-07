@@ -88,6 +88,7 @@ full-page-clip/
 ├── options.html/.js     설정 페이지
 ├── icons/               아이콘 (scripts/make-icons.py 로 생성)
 ├── docs/                README용 예시 이미지
+├── LICENSE              MIT
 ├── scripts/make-icons.py
 └── test/
     ├── e2e.mjs          자동 테스트: Chromium을 띄워 캡처하고 클립보드 이미지를 검증 (macOS)
@@ -109,3 +110,7 @@ node test/e2e.mjs --page test-hero.html --scale device --zoom 1.25
 테스트는 확장을 임시 폴더에 복사하면서 `host_permissions`를 추가한 뒤 서비스 워커의 `run()`을 직접 호출합니다
 (합성 키 입력으로는 Chrome 확장 단축키를 발동시킬 수 없기 때문). 실제 사용 시에는 단축키/아이콘 클릭이 `activeTab` 권한을 부여하므로 추가 권한이 필요 없습니다.
 브랜드 Google Chrome 137+ 는 `--load-extension` 을 무시하므로 테스트에는 Chrome for Testing 또는 Chromium을 쓰세요.
+
+## 라이선스
+
+[MIT](LICENSE)
