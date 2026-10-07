@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>Full Page Clip — 테스트 (내부 스크롤 컨테이너)</title>
+  <style>
+    html, body { height: 100%; margin: 0; overflow: hidden; font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    #app { height: 100vh; overflow-y: auto; background: #f3f4f6; }
+    .bar { position: sticky; top: 0; background: #111827; color: #fff; padding: 14px 20px; font-weight: 700; z-index: 2; }
+    .card { margin: 16px 24px; padding: 20px; background: #fff; border-radius: 10px; border: 1px solid #e5e7eb; height: 300px; font-size: 28px; font-weight: 700; }
+    .end { margin: 24px; padding: 30px; text-align: center; background: #dcfce7; color: #166534; font-size: 26px; font-weight: 800; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="bar">앱 레이아웃: window가 아니라 #app 컨테이너가 스크롤됩니다</div>
+    <div id="list"></div>
+    <div class="end">END OF SCROLLER ✓</div>
+  </div>
+  <script>
+    const list = document.getElementById('list');
+    for (let i = 1; i <= 15; i++) { const c = document.createElement('div'); c.className = 'card'; c.textContent = 'Card ' + i; list.appendChild(c); }
+  </script>
+</body>
+</html>

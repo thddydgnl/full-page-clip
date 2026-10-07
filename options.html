@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Full Page Clip 설정</title>
+  <style>
+    :root { color-scheme: light dark; --fg: #1f1f1f; --muted: #5f6368; --bg: #fff; --card: #f6f8fa; --line: #e0e3e7; --accent: #1a73e8; }
+    @media (prefers-color-scheme: dark) { :root { --fg: #e8eaed; --muted: #9aa0a6; --bg: #202124; --card: #2b2d31; --line: #3c4043; --accent: #8ab4f8; } }
+    body { margin: 0; padding: 32px 16px 48px; font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; color: var(--fg); background: var(--bg); }
+    main { max-width: 640px; margin: 0 auto; }
+    h1 { font-size: 22px; margin: 0 0 4px; }
+    .sub { color: var(--muted); margin: 0 0 24px; }
+    section { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
+    h2 { font-size: 15px; margin: 0 0 10px; }
+    label.row { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; cursor: pointer; }
+    label.row input { margin-top: 4px; }
+    .hint { color: var(--muted); font-size: 12.5px; }
+    input[type=number] { width: 110px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); font: inherit; }
+    kbd { display: inline-block; padding: 2px 8px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; background: var(--bg); font: 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
+    button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    #status { color: var(--accent); font-size: 13px; min-height: 1.4em; margin-top: 10px; }
+    ul { margin: 6px 0 0; padding-left: 18px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Full Page Clip 설정</h1>
+    <p class="sub">단축키 한 번으로 페이지 전체(스크롤 끝까지)를 캡처해 클립보드에 넣습니다. 다른 앱이나 채팅창에 <kbd>⌘V</kbd> / <kbd>Ctrl+V</kbd> 로 붙여넣으세요.</p>
+
+    <section>
+      <h2>단축키</h2>
+      <p>현재 단축키: <kbd id="shortcut">확인 중…</kbd></p>
+      <p class="hint">Chrome의 단축키 페이지에서 원하는 키로 바꿀 수 있습니다. (chrome://extensions/shortcuts)</p>
+      <button id="openShortcuts" class="primary">단축키 변경 페이지 열기</button>
+    </section>
+
+    <section>
+      <h2>캡처 방식</h2>
+      <label class="row"><input type="radio" name="mode" value="auto"> <span>자동 (권장) — 뷰포트 확장 방식을 쓰고, 페이지가 화면 높이에 따라 계속 늘어나는 구조(100vh 레이아웃 등)면 스크롤 방식으로 전환</span></label>
+      <label class="row"><input type="radio" name="mode" value="resize"> <span>뷰포트 확장 — 빠르고 고정 헤더가 한 번만 나옴. 화면 높이(vh)에 따라 크기가 변하는 요소는 커질 수 있음</span></label>
+      <label class="row"><input type="radio" name="mode" value="scroll"> <span>스크롤 이어붙이기 — 화면을 한 장씩 스크롤하며 캡처. 보이는 그대로지만 느리고, 고정 요소는 첫 화면 이후 숨김</span></label>
+    </section>
+
+    <section>
+      <h2>캡처 해상도</h2>
+      <label class="row"><input type="radio" name="scale" value="1x"> <span>1배 (CSS 픽셀 기준) — 파일이 작고, 채팅에 붙여넣기용으로 권장<br><span class="hint">레티나/고배율 화면에서도 이미지 폭이 화면 폭과 같습니다.</span></span></label>
+      <label class="row"><input type="radio" name="scale" value="device"> <span>화면 배율 그대로 (레티나 2배 등) — 더 선명하지만 용량이 큼</span></label>
+    </section>
+
+    <section>
+      <h2>최대 높이</h2>
+      <label class="row"><span>최대 높이 <input type="number" id="maxHeight" min="0" step="500"> px <span class="hint">(0 = 제한 없음)</span></span></label>
+      <p class="hint">이 높이보다 긴 페이지는 위에서부터 여기까지만 캡처합니다. 너무 크게 잡으면 메모리를 많이 쓰고, 채팅 서비스가 이미지를 거부하거나 강하게 축소할 수 있습니다.</p>
+    </section>
+
+    <section>
+      <h2>동작</h2>
+      <label class="row"><input type="checkbox" id="preScroll"> <span>캡처 전에 페이지를 끝까지 한 번 훑어 지연 로딩(lazy-load) 이미지를 미리 불러오기</span></label>
+      <label class="row"><input type="checkbox" id="showToast"> <span>완료/오류 메시지를 페이지 위에 잠깐 표시</span></label>
+      <label class="row"><input type="checkbox" id="alsoDownload"> <span>클립보드 복사와 함께 PNG 파일로도 저장 (다운로드 폴더)</span></label>
+      <div id="status"></div>
+    </section>
+
+    <section>
+      <h2>알아두기</h2>
+      <ul class="hint">
+        <li>캡처 중에는 탭 상단에 "확장 프로그램이 이 브라우저를 디버깅하기 시작했습니다" 바가 잠깐 나타났다 사라집니다. 정상입니다.</li>
+        <li>개발자 도구(DevTools)가 열린 탭에서는 캡처할 수 없습니다. 닫고 다시 시도하세요.</li>
+        <li>chrome:// 페이지, Chrome 웹 스토어, 다른 확장 프로그램 페이지는 캡처할 수 없습니다.</li>
+        <li>클립보드 복사에 실패하면 자동으로 PNG 파일로 저장합니다.</li>
+      </ul>
+    </section>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>

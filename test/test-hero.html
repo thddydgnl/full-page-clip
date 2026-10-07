@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>Full Page Clip — 테스트 (100vh 히어로)</title>
+  <style>
+    body { margin: 0; font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 800; color: #fff; background: linear-gradient(135deg, #4f46e5, #ec4899); }
+    nav { position: sticky; top: 0; background: #0f172a; color: #fff; padding: 12px 20px; font-weight: 700; }
+    .block { height: 420px; margin: 16px 24px; border-radius: 12px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: #334155; }
+    .fab { position: fixed; right: 24px; bottom: 24px; padding: 14px 18px; border-radius: 999px; background: #ef4444; color: #fff; font-weight: 700; }
+    footer { padding: 40px; text-align: center; font-size: 28px; font-weight: 800; color: #166534; background: #dcfce7; }
+  </style>
+</head>
+<body>
+  <section class="hero">HERO (height: 100vh)</section>
+  <nav>STICKY NAV — 스크롤 방식에서는 제자리에 한 번만 보여야 합니다</nav>
+  <div id="blocks"></div>
+  <footer>END OF HERO PAGE ✓</footer>
+  <div class="fab">FIXED FAB</div>
+  <script>
+    const b = document.getElementById('blocks');
+    for (let i = 1; i <= 8; i++) { const d = document.createElement('div'); d.className = 'block'; d.textContent = 'Block ' + i; b.appendChild(d); }
+  </script>
+</body>
+</html>

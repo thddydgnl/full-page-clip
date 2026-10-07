@@ -1,0 +1,57 @@
+{
+  "manifest_version": 3,
+  "name": "Full Page Clip",
+  "short_name": "FullPageClip",
+  "description": "단축키 한 번으로 전체 페이지(스크롤 끝까지)를 캡처해서 클립보드에 복사합니다. 다른 앱/채팅에 Cmd+V / Ctrl+V 로 바로 붙여넣기.",
+  "version": "1.0.0",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "activeTab",
+    "debugger",
+    "scripting",
+    "storage",
+    "clipboardWrite"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "전체 페이지 캡처 → 클립보드 (Full Page Clip)",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "capture-full-page": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "전체 페이지를 캡처해서 클립보드에 복사"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "clipboard.html",
+        "clipboard.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}
